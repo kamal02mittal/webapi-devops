@@ -89,10 +89,10 @@ pipeline {
             }
         }
 
-        stage("Deploy Docker on port 1700"){
+        stage("Deploy Docker on port 7100"){
             steps{
                 script {
-                    bat "docker run -d --name ${contName} -p 1700:1700 ${imgName}";
+                    bat "docker run -d --name ${contName} -p 7100:7100 ${imgName}";
                 }
             }
         }
