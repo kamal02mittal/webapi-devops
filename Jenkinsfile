@@ -43,7 +43,9 @@ pipeline {
 
         stage('Unit Test'){
             steps{
-                bat "NUNIT3-CONSOLE --result=NUnitResults.xml ${workspace}\\TestProject1\\bin\\Debug\\netcoreapp3.1\\TestProject1.dll"
+                def nunit = "NUnit\\bin\\netcoreapp3.1\\nunit3-console.exe"
+                echo "Unit Test Starts Here"
+                bat "\"${nunit}\" --result=NUnitResults.xml ${workspace}\\TestProject1\\bin\\Debug\\netcoreapp3.1\\TestProject1.dll"
             }
         }
 
