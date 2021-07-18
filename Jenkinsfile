@@ -68,7 +68,7 @@ pipeline {
             steps{
                 script{
                     bat "cd ${workspace}\\WebApplication2"
-                    app = docker.build("${imgName}")
+                    app = docker.build("${imgName}","-f ${workspace}\\WebApplication2\\Dockerfile .")
                 }
             }
         }
