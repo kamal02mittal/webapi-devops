@@ -77,7 +77,7 @@ pipeline {
             steps{
                 script {
                     withDockerRegistry(credentialsId: 'dockercredentials', url: 'https://registry.hub.docker.com'){
-                        app.push()
+                        bat "docker push kamalmittal2020/${imgName}:build"
                     }
                 }
             }
