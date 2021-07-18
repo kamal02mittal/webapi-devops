@@ -6,6 +6,7 @@ pipeline {
         def app = ''
         def imgName = "i-kamal02-master"
         def contName = "c-kamal02-master"
+        def dockerHubUsername = "kamalmittal2020"
     }
 
     stages {
@@ -77,7 +78,12 @@ pipeline {
             steps{
                 script {
                     withDockerRegistry(credentialsId: 'dockercredentials', url: 'https://registry.hub.docker.com'){
-                        bat "docker push ${imgName}:latest"
+                        echo "tag docker image"
+                        bat "docker tag ${imgName} ${dockerHubUsername}/${imgName}"
+                        echo "push docker image"
+                        bat "docker push ${dockerHubUsername}/${imgName}:latest"
+                        echo "delete tagged docker image from local"
+                        bat "docker rmi ${dockerHubUsername}/${imgName}"
                     }
                 }
             }
