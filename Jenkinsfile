@@ -67,6 +67,7 @@ pipeline {
         stage('Create Docker Image'){
             steps{
                 script{
+                    bat "cd ${workspace}\\WebApplication2"
                     app = docker.build("${imgName}")
                 }
             }

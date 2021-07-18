@@ -1,0 +1,11 @@
+version: '3.4'
+
+services:
+  nagp-devops:
+    image: i-kamal02-master
+    build:
+      context: .
+      dockerfile: WebApplication2/Dockerfile
+    ports:
+      - "1700:80"
+    container_name: c-kamal02-master
