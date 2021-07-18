@@ -77,7 +77,7 @@ pipeline {
             steps{
                 script {
                     withDockerRegistry(credentialsId: 'dockercredentials', url: 'https://registry.hub.docker.com'){
-                        bat "docker push ${imgName}:build"
+                        bat "docker push ${imgName}:latest"
                     }
                 }
             }
