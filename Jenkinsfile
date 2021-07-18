@@ -52,7 +52,7 @@ pipeline {
 
         stage('Run SonarQube Analysis'){
             steps{
-                withSonarQubeEnv(installationName: 'SonarQubeServer')  
+                withSonarQubeEnv(installationName: 'Test_Sonar')  
                  {
                     //Scan Modules  
                     echo 'Sonarqube scanning started'                               
