@@ -18,7 +18,7 @@ pipeline {
 
         stage("Restore Nuget Packages"){
             steps{
-                bat "dotnet restore ${workspace}\\WebApplication2\\WebApplication2.csproj"
+                bat "dotnet restore ${workspace}\\WebApplication2.sln"
             }
         }
 
@@ -27,16 +27,16 @@ pipeline {
                 echo "clean starts here"
                 // Installed MSBuild plugin and added path C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\MSBuild\Current\Bin\MSBuild.exe
                 //{workspace} is default variable of Jenkins. It will provide path to project in jenkis
-                bat "dotnet clean ${workspace}\\WebApplication2\\WebApplication2.csproj"
+                bat "dotnet clean ${workspace}\\WebApplication2.sln"
             }
         }
 
         stage('Build'){
             steps{
-                echo "clean starts here"
+                echo "Build starts here"
                 // Installed MSBuild plugin and added path C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\MSBuild\Current\Bin\MSBuild.exe
                 //{workspace} is default variable of Jenkins. It will provide path to project in jenkis
-                bat "dotnet build ${workspace}\\WebApplication2\\WebApplication2.csproj"
+                bat "dotnet build ${workspace}\\WebApplication2.sln"
             }
         }
 
