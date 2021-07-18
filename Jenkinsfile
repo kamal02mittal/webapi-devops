@@ -3,6 +3,9 @@ pipeline {
 
     environment {
         SonarQubeScanner = tool name: 'SonarQubeScanner', type: 'hudson.plugins.sonar.SonarRunnerInstallation'
+        def app = ''
+        def imgName = "i-kamal02-master"
+        def contName = "c-kamal02-master"
     }
 
     stages {
@@ -58,6 +61,32 @@ pipeline {
                     echo 'Sonarqube scanning started'                               
                     bat  """ ${SonarQubeScanner} -Dsonar.projectKey=using_jenkins -Dsonar.projectname=using_jenkins -Dsonar.sourceEncoding=UTF-8 -Dsonar.sources=${workspace}\\WebApplication2 -Dsonar.cs.nunit.reportsPaths=${workspace}\\NUnitResults.xml -Dsonar.verbose=true """
                  }
+            }
+        }
+
+        stage('Create Docker Image'){
+            steps{
+                script{
+                    app = docker.build("${imgName}")
+                }
+            }
+        }
+
+        stage('Push Docker Image to Docker Hub'){
+            steps{
+                script {
+                    withDockerRegistry(credentialsId: 'dockercredentials', url: 'https://registry.hub.docker.com'){
+                        app.push()
+                    }
+                }
+            }
+        }
+
+        stage("Deploy Docker on port 1700"){
+            steps{
+                script {
+                    bat "docker run -d --name ${contName} -p 1700:1700 ${imgName}";
+                }
             }
         }
     }
