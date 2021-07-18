@@ -3,7 +3,6 @@ pipeline {
 
     environment {
         SonarQubeScanner = tool name: 'SonarQubeScanner', type: 'hudson.plugins.sonar.SonarRunnerInstallation'
-
     }
 
     stages {
@@ -43,9 +42,11 @@ pipeline {
 
         stage('Unit Test'){
             steps{
-                def nunit = "NUnit\\bin\\netcoreapp3.1\\nunit3-console.exe"
-                echo "Unit Test Starts Here"
-                bat "\"${nunit}\" --result=NUnitResults.xml ${workspace}\\TestProject1\\bin\\Debug\\netcoreapp3.1\\TestProject1.dll"
+                script{
+                    def nunit = "NUnit\\bin\\netcoreapp3.1\\nunit3-console.exe"
+                    echo "Unit Test Starts Here"
+                    bat "\"${nunit}\" --result=NUnitResults.xml ${workspace}\\TestProject1\\bin\\Debug\\netcoreapp3.1\\TestProject1.dll"
+                }
             }
         }
 
