@@ -2,7 +2,6 @@ pipeline {
     agent any
 
     environment {
-        def msbuild = tool name: 'msbuildexe', type: 'msbuild'
         SonarQubeScanner = tool name: 'SonarQubeScanner', type: 'hudson.plugins.sonar.SonarRunnerInstallation'
 
     }
@@ -42,23 +41,21 @@ pipeline {
             }
         }
 
-        // stage('Unit Test'){
-        //     steps{
-        //         def nunit = "NUnit\\bin\\netcoreapp3.1\\nunit3-console.exe"
-        //         echo "Unit Test Starts Here"
-        //         bat "\"${nunit}\" --result=NUnitResults.xml ${workspace}\\TestProject1\\bin\\Debug\\netcoreapp3.1\\TestProject1.dll"
-        //     }
-        // }
+        stage('Unit Test'){
+            steps{
+                bat "NUNIT3-CONSOLE --result=NUnitResults.xml ${workspace}\\TestProject1\\bin\\Debug\\netcoreapp3.1\\TestProject1.dll"
+            }
+        }
 
-        // stage('Run SonarQube Analysis'){
-        //     steps{
-        //         withSonarQubeEnv(installationName: 'SonarQubeServer')  
-        //          {
-        //             //Scan Modules  
-        //             echo 'Sonarqube scanning started'                               
-        //             bat  """ ${SonarQubeScanner} -Dsonar.projectKey=using_jenkins -Dsonar.projectname=using_jenkins -Dsonar.sourceEncoding=UTF-8 -Dsonar.sources=${workspace}\\WebApplication1 -Dsonar.cs.nunit.reportsPaths=${workspace}\\NUnitResults.xml -Dsonar.verbose=true """
-        //          }
-        //     }
-        // }
+        stage('Run SonarQube Analysis'){
+            steps{
+                withSonarQubeEnv(installationName: 'SonarQubeServer')  
+                 {
+                    //Scan Modules  
+                    echo 'Sonarqube scanning started'                               
+                    bat  """ ${SonarQubeScanner} -Dsonar.projectKey=using_jenkins -Dsonar.projectname=using_jenkins -Dsonar.sourceEncoding=UTF-8 -Dsonar.sources=${workspace}\\WebApplication1 -Dsonar.cs.nunit.reportsPaths=${workspace}\\NUnitResults.xml -Dsonar.verbose=true """
+                 }
+            }
+        }
     }
 }
